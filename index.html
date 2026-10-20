@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>A Magical Birthday Surprise For HarshuuU 🌸 | 22 October</title>
+  <meta name="description" content="A private fairytale birthday celebration and love sanctuary for my beautiful fiancée HarshuuU">
+
+  <!-- Romantic & Fairytale Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- YouTube IFrame Player API for Infinite Looping Song -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ==========================================
+       ROMANTIC INTRO / SURPRISE ENTRANCE CURTAIN
+       ========================================== -->
+  <div class="entrance-curtain" id="entranceCurtain">
+    <div class="entrance-card">
+      <div class="entrance-sparkle">✨ 🌸 ✨</div>
+      <div class="entrance-to">A Secret Birthday Surprise</div>
+      <h1 class="entrance-title">For My Gorgeous Fiancée<br><span class="entrance-name">HarshuuU</span> 💖</h1>
+      <p class="entrance-sub">Before you step inside, close your eyes, take a deep breath, and remember how deeply and endlessly you are loved.</p>
+      
+      <button class="open-surprise-btn" id="openSurpriseBtn" onclick="unlockSurpriseExperience()">
+        <span class="btn-heart-pulse">💖</span>
+        <span class="btn-text">Tap Here To Open Your Surprise</span>
+        <span class="btn-subtext">✨ Music & Magic Await Inside ✨</span>
+      </button>
+
+      <div class="entrance-footer">Specially handcrafted with all my heart &bull; 22 October</div>
+    </div>
+  </div>
+
+  <!-- Floating Sakura Petals Canvas -->
+  <canvas id="sakuraCanvas"></canvas>
+
+  <!-- Ambient Dreamy Background Glows -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+
+  <!-- Floating Romantic Music Player -->
+  <div class="music-pill" id="musicPill" title="Play / Pause Romantic Music">
+    <button class="music-btn" id="musicToggleBtn" aria-label="Toggle Background Music">
+      <span class="music-icon" id="musicIcon">🎵</span>
+      <div class="music-bars" id="musicBars">
+        <span></span><span></span><span></span><span></span>
+      </div>
+    </button>
+    <div class="music-info">
+      <span class="music-title" id="musicTrackName">Happy Birthday (Orchestral Melody)</span>
+      <span class="music-status" id="musicStatusText">Playing for Harshuu 🌸</span>
+    </div>
+    <input type="file" id="customAudioInput" accept="audio/*" style="display:none">
+    <button class="music-upload-btn" id="musicUploadTrigger" title="Upload Your Special Couple Song">📂</button>
+  </div>
+
+  <!-- Mobile-Compliant YouTube Audio Stream Container (Continuous Infinite Loop) -->
+  <div id="ytPlayerContainer" style="position:fixed; top:0; left:0; width:180px; height:120px; opacity:0.001; pointer-events:none; z-index:-10;">
+    <div id="youtubePlayer"></div>
+  </div>
+
+  <!-- Main Single Page Container -->
+  <div class="app-container" id="mainAppContainer">
+
+    <!-- ==========================================
+         HERO HEADER & LIVE COUNTDOWN TO 22 OCT
+         ========================================== -->
+    <header class="hero-header">
+      <div class="badge-fiancee">
+        <span class="sparkle">✨</span> To My Future Wife & Queen <span class="sparkle">✨</span>
+      </div>
+      <h1 class="main-title">Happy Birthday, My <span class="highlight-name">HarshuuU</span> 🌸</h1>
+      <p class="love-subtitle">
+        "You didn't just walk into my life; you bloomed in it like the sweetest spring morning. Happy 22nd of October, my forever love."
+      </p>
+
+      <!-- Digital Countdown Card to 22 October -->
+      <div class="countdown-card" id="countdownCard">
+        <div class="countdown-label">
+          <span class="timer-heart">💖</span>
+          <span id="countdownTitle">Countdown To Harshuu's Big Day &bull; 22 October</span>
+          <span class="timer-heart">💖</span>
+        </div>
+        
+        <div class="timer-grid">
+          <div class="timer-segment">
+            <div class="timer-box">
+              <span class="timer-num" id="daysNum">00</span>
+            </div>
+            <span class="timer-text">Days</span>
+          </div>
+          <div class="timer-colon">:</div>
+          <div class="timer-segment">
+            <div class="timer-box">
+              <span class="timer-num" id="hoursNum">00</span>
+            </div>
+            <span class="timer-text">Hours</span>
+          </div>
+          <div class="timer-colon">:</div>
+          <div class="timer-segment">
+            <div class="timer-box">
+              <span class="timer-num" id="minutesNum">00</span>
+            </div>
+            <span class="timer-text">Minutes</span>
+          </div>
+          <div class="timer-colon">:</div>
+          <div class="timer-segment">
+            <div class="timer-box">
+              <span class="timer-num" id="secondsNum">00</span>
+            </div>
+            <span class="timer-text">Seconds</span>
+          </div>
+        </div>
+        
+        <div class="countdown-status" id="countdownMessage">
+          🌸 Counting down every single second until we celebrate you, my Queen!
+        </div>
+      </div>
+
+      <!-- Quick Action Controls -->
+      <div class="header-controls">
+        <button class="pill-action-btn" onclick="scrollToSection('cakeSection')">
+          🎂 Blow Birthday Candles
+        </button>
+        <button class="pill-action-btn" onclick="scrollToSection('vowsSection')">
+          💍 7 Vows To My Wife
+        </button>
+        <button class="pill-action-btn" onclick="scrollToSection('reasonsSection')">
+          💖 22 Reasons I Love You
+        </button>
+        <button class="pill-action-btn" onclick="openCustomizeModal()">
+          📷 Add Our Real Photos
+        </button>
+      </div>
+    </header>
+
+    <!-- Couple Love Stats Ribbon -->
+    <div class="stats-ribbon">
+      <div class="stat-item">
+        <span class="stat-number">22 Oct</span>
+        <span class="stat-label">Her Birthday &bull; Queen's Day</span>
+      </div>
+      <div class="stat-divider">🌸</div>
+      <div class="stat-item">
+        <span class="stat-number">Infinite</span>
+        <span class="stat-label">Love In My Heart For You</span>
+      </div>
+      <div class="stat-divider">🌸</div>
+      <div class="stat-item">
+        <span class="stat-number">1 & Only</span>
+        <span class="stat-label">Fiancée & Future Wife</span>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         INTERACTIVE LOVE METER (PLAYFUL SURPRISE)
+         ========================================== -->
+    <section class="page-section" id="loveMeterSection">
+      <div class="love-meter-card">
+        <div class="meter-icon">💘</div>
+        <h3 class="meter-title">How Much Does Your Fiancé Love You?</h3>
+        <p class="meter-sub">Touch the magic button below to calculate the real love level!</p>
+        
+        <div class="meter-bar-track">
+          <div class="meter-bar-fill" id="meterFill"></div>
+          <span class="meter-percentage" id="meterPercent">0%</span>
+        </div>
+
+        <button class="meter-btn" id="calculateLoveBtn" onclick="calculateLoveMeter()">
+          ✨ Calculate Love Percentage ✨
+        </button>
+
+        <div class="meter-result-box" id="meterResultBox" style="display:none;">
+          <div class="meter-result-badge">💖 CALCULATION RESULT: ERROR! 💖</div>
+          <p class="meter-result-text">
+            <strong>System Overflow: 1,000,000,000,000% !!</strong><br>
+            Numbers ran out! No machine or calculator can ever measure how deeply, madly, and unconditionally I love you, Harshuu. You are my whole universe!
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Romantic Section Divider -->
+    <div class="section-separator">
+      <span>🌸</span><span>💖</span><span>🌸</span>
+    </div>
+
+    <!-- ==========================================
+         THE GRAND BIRTHDAY CAKE CEREMONY (22 OCT)
+         ========================================== -->
+    <section class="page-section" id="cakeSection">
+      <div class="section-intro">
+        <span class="tagline">✨ The Grand Moment &bull; 22 October ✨</span>
+        <h2 class="section-title">Make A Birthday Wish, HarshuuU! 🎂</h2>
+        <p class="section-desc">Close your eyes, make the deepest wish in your heart, and blow out your birthday candles!</p>
+      </div>
+
+      <div class="cake-ceremony-card">
+        <div class="ceremony-tag">🌸 Virtual Cake Cutting & Candle Blowing 🌸</div>
+        <p class="cake-instruction">Click the cake or tap the button below to blow out your candles!</p>
+
+        <!-- Interactive 3D Cake Visual -->
+        <div class="cake-stage" id="cakeStage" onclick="blowOutCandles()">
+          
+          <!-- Flickering Candle Flames -->
+          <div class="candles-rack" id="candlesRack">
+            <div class="candle c-1">
+              <div class="flame" id="flame1"></div>
+              <div class="wick"></div>
+              <div class="stick"></div>
+            </div>
+            <div class="candle c-2">
+              <div class="flame" id="flame2"></div>
+              <div class="wick"></div>
+              <div class="stick"></div>
+            </div>
+            <div class="candle c-3">
+              <div class="flame" id="flame3"></div>
+              <div class="wick"></div>
+              <div class="stick"></div>
+            </div>
+            <div class="candle c-4">
+              <div class="flame" id="flame4"></div>
+              <div class="wick"></div>
+              <div class="stick"></div>
+            </div>
+            <div class="candle c-5">
+              <div class="flame" id="flame5"></div>
+              <div class="wick"></div>
+              <div class="stick"></div>
+            </div>
+          </div>
+
+          <!-- Cake Tiers -->
+          <div class="cake-layer layer-top">
+            <div class="icing-dripping"></div>
+            <span class="cake-text-decor">H &bull; A &bull; R &bull; S &bull; H &bull; U</span>
+          </div>
+          <div class="cake-layer layer-middle">
+            <div class="berry-row">🍓 🌸 🍓 🌸 🍓</div>
+          </div>
+          <div class="cake-layer layer-bottom">
+            <div class="ribbon-decor">💖 For My Beloved Fiancée 💖</div>
+          </div>
+          <div class="cake-plate"></div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="cake-action-row">
+          <button class="blow-candle-btn" id="blowCandleBtn" onclick="blowOutCandles()">
+            🎂 Make A Wish & Blow Out Candles! 💨
+          </button>
+          <button class="relight-btn" id="relightBtn" onclick="relightCandles()" style="display:none;">
+            ✨ Relight Candles & Relive Magic
+          </button>
+        </div>
+
+        <!-- Celebration Wish Popup Box -->
+        <div class="wish-message-box" id="wishMessageBox" style="display:none;">
+          <div class="confetti-badge">🎉 YAAAAY! HAPPY BIRTHDAY HARSHUUU! 🎉</div>
+          <p class="wish-text">
+            May your 22nd of October and every tomorrow that follows overflow with radiant smiles, pure peace, sparkling health, and big achievements! Thank you for choosing to walk through this life with me. You are my greatest blessing!
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Romantic Section Divider -->
+    <div class="section-separator">
+      <span>🌸</span><span>💖</span><span>🌸</span>
+    </div>
+
+    <!-- ==========================================
+         OUR MEMORIES & POLAROID VAULT
+         ========================================== -->
+    <section class="page-section" id="photoSection">
+      <div class="section-intro">
+        <span class="tagline">📸 Snapshots Of Us &bull; Our Story</span>
+        <h2 class="section-title">Our Private Memory Vault 💕</h2>
+        <p class="section-desc">Every moment by your side feels like poetry. Hover or tap each polaroid to see our memory note!</p>
+      </div>
+
+      <!-- Polaroid Wall -->
+      <div class="polaroid-grid" id="polaroidGrid">
+        
+        <!-- Polaroid 1 -->
+        <div class="polaroid-card">
+          <div class="tape"></div>
+          <div class="polaroid-frame">
+            <img src="assets/images/memory1.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=700&q=80'" alt="Memory 1" id="polaroidImg1">
+            <div class="polaroid-caption">
+              <span class="caption-date">Cherished Moment #1</span>
+              <span class="caption-text">Your precious laughter that lights up my darkest days 💕</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Polaroid 2 -->
+        <div class="polaroid-card rotate-right">
+          <div class="tape"></div>
+          <div class="polaroid-frame">
+            <img src="assets/images/memory2.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=700&q=80'" alt="Memory 2" id="polaroidImg2">
+            <div class="polaroid-caption">
+              <span class="caption-date">Cherished Moment #2</span>
+              <span class="caption-text">Walking hand in hand into our forever 🌸</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Polaroid 3 -->
+        <div class="polaroid-card rotate-left">
+          <div class="tape"></div>
+          <div class="polaroid-frame">
+            <img src="assets/images/memory3.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=700&q=80'" alt="Memory 3" id="polaroidImg3">
+            <div class="polaroid-caption">
+              <span class="caption-date">Cherished Moment #3</span>
+              <span class="caption-text">That gorgeous smile that stole my heart forever ✨</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Polaroid 4 -->
+        <div class="polaroid-card">
+          <div class="tape"></div>
+          <div class="polaroid-frame">
+            <img src="assets/images/memory4.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=700&q=80'" alt="Memory 4" id="polaroidImg4">
+            <div class="polaroid-caption">
+              <span class="caption-date">Cherished Moment #4</span>
+              <span class="caption-text">Our sacred promise of unconditional love 💍</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="text-align: center; margin-top: 1.6rem;">
+        <button class="pill-action-btn" onclick="openCustomizeModal()">
+          📷 Click To Put Your Real Photos Here
+        </button>
+      </div>
+    </section>
+
+    <!-- Romantic Section Divider -->
+    <div class="section-separator">
+      <span>🌸</span><span>💖</span><span>🌸</span>
+    </div>
+
+    <!-- ==========================================
+         7 SACRED VOWS TO MY FUTURE WIFE
+         ========================================== -->
+    <section class="page-section" id="vowsSection">
+      <div class="section-intro">
+        <span class="tagline">💍 From Your Future Husband &bull; Written In Stone</span>
+        <h2 class="section-title">7 Sacred Vows To My Wife, HarshuuU</h2>
+        <p class="section-desc">Promises I pledge from the depth of my soul, today and for all our years to come.</p>
+      </div>
+
+      <div class="vows-grid">
+        <div class="vow-card">
+          <div class="vow-number">Vow 01</div>
+          <div class="vow-icon">🤝</div>
+          <h4>To Always Stand By You</h4>
+          <p>In every high and low, you will never have to face this world alone. I am your shelter, your rock, and your partner.</p>
+        </div>
+
+        <div class="vow-card">
+          <div class="vow-number">Vow 02</div>
+          <div class="vow-icon">🌟</div>
+          <h4>To Celebrate Your Dreams</h4>
+          <p>I will always be your loudest cheerleader, encouraging every ambition and celebrating every win with proud tears.</p>
+        </div>
+
+        <div class="vow-card">
+          <div class="vow-number">Vow 03</div>
+          <div class="vow-icon">🌙</div>
+          <h4>To Protect Your Peace</h4>
+          <p>I promise to make our home a sanctuary of warm hugs, peaceful sleep, and gentle understanding.</p>
+        </div>
+
+        <div class="vow-card">
+          <div class="vow-number">Vow 04</div>
+          <div class="vow-icon">😂</div>
+          <h4>To Make You Laugh Daily</h4>
+          <p>I will always do silly dances, tell goofy jokes, and do whatever it takes to see that adorable crinkle in your nose.</p>
+        </div>
+
+        <div class="vow-card">
+          <div class="vow-number">Vow 05</div>
+          <div class="vow-icon">☕</div>
+          <h4>To Never Stop Courting You</h4>
+          <p>Even when we have wrinkles and grey hairs, I will still take you out on cute dates and look at you like I won the lottery.</p>
+        </div>
+
+        <div class="vow-card">
+          <div class="vow-number">Vow 06</div>
+          <div class="vow-icon">🛡️</div>
+          <h4>To Respect & Treasure You</h4>
+          <p>Your thoughts, your feelings, and your boundaries will always be held with the highest reverence and care.</p>
+        </div>
+
+        <div class="vow-card highlight-vow">
+          <div class="vow-number">Vow 07</div>
+          <div class="vow-icon">💍</div>
+          <h4>To Choose You Every Single Day</h4>
+          <p>In this lifetime and any lifetime after, I will find you, choose you, and love you again and again without hesitation.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Romantic Section Divider -->
+    <div class="section-separator">
+      <span>🌸</span><span>💖</span><span>🌸</span>
+    </div>
+
+    <!-- ==========================================
+         DIGITAL LOVE ENVELOPES
+         ========================================== -->
+    <section class="page-section" id="envelopesSection">
+      <div class="section-intro">
+        <span class="tagline">💌 Secret Letters &bull; Strictly For Your Heart</span>
+        <h2 class="section-title">Digital Love Envelopes 💌</h2>
+        <p class="section-desc">Tap on any sealed envelope to break the wax seal and read the letter written for you!</p>
+      </div>
+
+      <div class="envelopes-grid">
+        <!-- Envelope 1 -->
+        <div class="envelope-item" onclick="openLetter(1)">
+          <div class="envelope-wrapper">
+            <div class="envelope-front">
+              <div class="envelope-flap"></div>
+              <div class="wax-seal">💖</div>
+              <div class="envelope-to">Open When You Miss Me</div>
+              <span class="envelope-hint">Tap to Open Letter &rarr;</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Envelope 2 -->
+        <div class="envelope-item" onclick="openLetter(2)">
+          <div class="envelope-wrapper">
+            <div class="envelope-front">
+              <div class="envelope-flap"></div>
+              <div class="wax-seal">🌸</div>
+              <div class="envelope-to">Open When You Need A Smile</div>
+              <span class="envelope-hint">Tap to Open Letter &rarr;</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Envelope 3 -->
+        <div class="envelope-item" onclick="openLetter(3)">
+          <div class="envelope-wrapper">
+            <div class="envelope-front">
+              <div class="envelope-flap"></div>
+              <div class="wax-seal">🎂</div>
+              <div class="envelope-to">Open On Your Birthday! (22 Oct)</div>
+              <span class="envelope-hint">Tap to Open Letter &rarr;</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Romantic Section Divider -->
+    <div class="section-separator">
+      <span>🌸</span><span>💖</span><span>🌸</span>
+    </div>
+
+    <!-- ==========================================
+         TIMELINE OF US (WHERE IT ALL BEGAN)
+         ========================================== -->
+    <section class="page-section" id="timelineSection">
+      <div class="section-intro">
+        <span class="tagline">💫 From The First Hello &bull; To Forever</span>
+        <h2 class="section-title">The Story Of You & Me 💕</h2>
+        <p class="section-desc">How you turned into my favorite person, my greatest peace, and my entire world.</p>
+      </div>
+
+      <div class="timeline-container">
+        
+        <!-- Milestone 1 -->
+        <div class="timeline-card left">
+          <div class="card-glass">
+            <div class="card-icon">💫</div>
+            <div class="card-date">Chapter 1</div>
+            <h3>When The Universe Brought Us Together</h3>
+            <p>I still remember the first time we connected. I had no idea that you were going to become my whole entire world and the love of my life.</p>
+            <div class="timeline-img-holder">
+              <img src="assets/images/timeline1.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80'" alt="Our Beginning" class="timeline-img" id="imgTimeline1">
+              <span class="img-caption">The day my favorite love story began ✨</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Milestone 2 -->
+        <div class="timeline-card right">
+          <div class="card-glass">
+            <div class="card-icon">☕</div>
+            <div class="card-date">Chapter 2</div>
+            <h3>Countless Late Night Calls & Laughter</h3>
+            <p>Hours felt like seconds whenever I spoke with you. Learning about your cute dreams, your voice, and your sweet habits made me fall head over heels.</p>
+            <div class="timeline-img-holder">
+              <img src="assets/images/timeline2.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80'" alt="Late night talks" class="timeline-img" id="imgTimeline2">
+              <span class="img-caption">Every conversation with you is my therapy 💖</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Milestone 3 -->
+        <div class="timeline-card left">
+          <div class="card-glass">
+            <div class="card-icon">💍</div>
+            <div class="card-date">Chapter 3</div>
+            <h3>Saying YES To Forever Together</h3>
+            <p>When our souls chose each other and you became my fiancée. That day, my heart made a sacred promise to cherish and protect you forever.</p>
+            <div class="timeline-img-holder">
+              <img src="assets/images/timeline3.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=800&q=80'" alt="Engagement ring promise" class="timeline-img" id="imgTimeline3">
+              <span class="img-caption">My forever & always, HarshuuU 💍</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Milestone 4 -->
+        <div class="timeline-card right">
+          <div class="card-glass">
+            <div class="card-icon">🌺</div>
+            <div class="card-date">22 October 2026 & Beyond</div>
+            <h3>Celebrating Another Year Of Your Grace</h3>
+            <p>You make every single day magical just by existing. You are the sweetest, most stunning fiancée anyone could ever dream of having in this life.</p>
+            <div class="quote-box">
+              "In your eyes, I see my home. In your smile, I see my future."
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Romantic Section Divider -->
+    <div class="section-separator">
+      <span>🌸</span><span>💖</span><span>🌸</span>
+    </div>
+
+    <!-- ==========================================
+         22 REASONS WHY I LOVE YOU
+         ========================================== -->
+    <section class="page-section" id="reasonsSection">
+      <div class="section-intro">
+        <span class="tagline">💖 Celebrating 22 With 22 Reasons 💖</span>
+        <h2 class="section-title">22 Reasons Why I Love HarshuuU</h2>
+        <p class="section-desc">Tap on any heart card to pop it open and discover why you own every beat of my heart!</p>
+      </div>
+
+      <div class="reasons-grid" id="reasonsGrid">
+        <!-- Populated dynamically via JS with 22 romantic reasons -->
+      </div>
+    </section>
+
+    <!-- Romantic Section Divider -->
+    <div class="section-separator">
+      <span>🌸</span><span>💖</span><span>🌸</span>
+    </div>
+
+    <!-- ==========================================
+         GRAND FIANCÉ BIRTHDAY LOVE LETTER
+         ========================================== -->
+    <section class="page-section" id="letterSection">
+      <div class="parchment-letter-card">
+        <div class="parchment-stamp">
+          <span class="stamp-icon">💍</span>
+          <span class="stamp-text">From Your Fiancé With All My Heart</span>
+        </div>
+        
+        <h2 class="letter-heading">Dearest HarshuuU,</h2>
+        
+        <div class="letter-body">
+          <p>
+            Happy, happy Birthday to the girl who stole my heart, turned my ordinary world into pure poetry, and made me the luckiest fiancé alive.
+          </p>
+          <p>
+            When I look at you, I don't just see the prettiest face or the cutest laughter—I see my partner, my peace, my confidante, and the person I want to build every single tomorrow with. You have a heart of pure gold, and your kindness inspires me every single day.
+          </p>
+          <p>
+            Through every joy, every test, every long conversation, and every little dream we share, I promise to stand by you, make you laugh when you're tired, cheer the loudest for all your victories, and love you deeper with each passing year.
+          </p>
+          <p>
+            This website is just a small digital token of my infinite love for you on your special 22nd of October. May your birthday and all our tomorrows be filled with soft smiles, peaceful sleep, huge milestones, and endless warm hugs.
+          </p>
+          <p class="letter-closing">
+            Forever yours, always and only,<br>
+            <span class="signature-handwritten">Your Fiancé &bull; With All My Love 💖</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Shower With Infinite Hearts Button -->
+      <div class="fireworks-celebration-box">
+        <button class="celebrate-btn" onclick="triggerHeartBurst()">
+          💖 Shower Harshuu With Infinite Love & Hearts! 💖
+        </button>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p class="footer-heart">Made with infinite love for HarshuuU 🌸 22 October</p>
+      <p class="footer-sub">A forever memory built for the most special girl in the world.</p>
+    </footer>
+
+  </div>
+
+  <!-- MODAL: LETTER READER (POPUP) -->
+  <div class="modal-overlay" id="letterModal" onclick="closeLetterModal(event)">
+    <div class="modal-letter-card" id="modalCard">
+      <button class="close-modal-btn" onclick="closeLetterModalDirect()">&times;</button>
+      <div class="letter-modal-header">
+        <span class="modal-wax">💌</span>
+        <h3 id="modalLetterTitle">Letter Title</h3>
+        <span class="modal-date">Written with love</span>
+      </div>
+      <div class="modal-letter-content" id="modalLetterBody">
+        Letter content here...
+      </div>
+      <div class="modal-footer">
+        <button class="modal-close-action" onclick="closeLetterModalDirect()">Keep in My Heart 🌸</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: PHOTO CUSTOMIZER -->
+  <div class="modal-overlay" id="customizeModal" onclick="closeCustomizeModal(event)">
+    <div class="modal-customizer-card">
+      <button class="close-modal-btn" onclick="closeCustomizeModalDirect()">&times;</button>
+      <h3 class="customizer-title">📷 Personalize Your Photos & Music</h3>
+      <p class="customizer-sub">Upload your real pictures together and select your favorite romantic song! They are automatically saved in your browser.</p>
+
+      <div class="customizer-form">
+        <div class="customizer-field">
+          <label>📸 Polaroid #1 Photo (Laughter):</label>
+          <input type="file" accept="image/*" onchange="handlePhotoUpload(event, 'polaroidImg1')">
+        </div>
+        <div class="customizer-field">
+          <label>📸 Polaroid #2 Photo (Together):</label>
+          <input type="file" accept="image/*" onchange="handlePhotoUpload(event, 'polaroidImg2')">
+        </div>
+        <div class="customizer-field">
+          <label>📸 Polaroid #3 Photo (Her Smile):</label>
+          <input type="file" accept="image/*" onchange="handlePhotoUpload(event, 'polaroidImg3')">
+        </div>
+        <div class="customizer-field">
+          <label>📸 Polaroid #4 Photo (Promise):</label>
+          <input type="file" accept="image/*" onchange="handlePhotoUpload(event, 'polaroidImg4')">
+        </div>
+        <div class="customizer-field">
+          <label>📸 Timeline Milestone #1 (First Chapter):</label>
+          <input type="file" accept="image/*" onchange="handlePhotoUpload(event, 'imgTimeline1')">
+        </div>
+        <div class="customizer-field">
+          <label>📸 Timeline Milestone #2 (Late Night Talks):</label>
+          <input type="file" accept="image/*" onchange="handlePhotoUpload(event, 'imgTimeline2')">
+        </div>
+        <div class="customizer-field">
+          <label>📸 Timeline Milestone #3 (The Ring/Promise):</label>
+          <input type="file" accept="image/*" onchange="handlePhotoUpload(event, 'imgTimeline3')">
+        </div>
+        <div class="customizer-field">
+          <label>🎵 Set Custom Song (MP3 / Audio File):</label>
+          <input type="file" accept="audio/*" onchange="handleCustomAudioUpload(event)">
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="modal-save-action" onclick="closeCustomizeModalDirect()">Save & Enjoy Experience ✨</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

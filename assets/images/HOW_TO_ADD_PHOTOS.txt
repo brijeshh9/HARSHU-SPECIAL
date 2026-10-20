@@ -1,0 +1,14 @@
+Put your photos here with these exact names:
+
+Polaroid Photos:
+- memory1.jpg (or .png / .jpeg)
+- memory2.jpg
+- memory3.jpg
+- memory4.jpg
+
+Timeline Milestone Photos:
+- timeline1.jpg
+- timeline2.jpg
+- timeline3.jpg
+
+As soon as you put your photos here with these names, they will automatically appear on the website!
