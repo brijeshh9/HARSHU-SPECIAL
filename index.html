@@ -131,7 +131,13 @@
       <!-- Quick Action Controls -->
       <div class="header-controls">
         <button class="pill-action-btn" onclick="scrollToSection('cakeSection')">
-          🎂 Blow Birthday Candles
+          🎂 Blow Candles
+        </button>
+        <button class="pill-action-btn" onclick="scrollToSection('giftSection')">
+          🎁 Unwrap Gift Box
+        </button>
+        <button class="pill-action-btn" onclick="scrollToSection('scratchSection')">
+          🪄 Scratch Secret Card
         </button>
         <button class="pill-action-btn" onclick="scrollToSection('vowsSection')">
           💍 7 Vows To My Wife
@@ -275,6 +281,120 @@
         </div>
 
       </div>
+    </section>
+
+    <!-- Romantic Section Divider -->
+    <div class="section-separator">
+      <span>🌸</span><span>💖</span><span>🌸</span>
+    </div>
+
+    <!-- ==========================================
+         NEW: THE 3D BIRTHDAY GIFT BOX & COUPONS
+         ========================================== -->
+    <section class="page-section" id="giftSection">
+      <div class="section-intro">
+        <span class="tagline">🎁 A Special Gift For HarshuuU 🎁</span>
+        <h2 class="section-title">Tap To Unwrap Your Birthday Gift!</h2>
+        <p class="section-desc">Tap the ribbon on the gift box to open your special birthday present from your fiancé!</p>
+      </div>
+
+      <div class="gift-box-container" id="giftContainer" onclick="unwrapBirthdayGift()">
+        <div class="gift-lid" id="giftLid">
+          <div class="ribbon-bow">🎀</div>
+        </div>
+        <div class="gift-body" id="giftBody">
+          <div class="ribbon-vertical"></div>
+          <div class="ribbon-horizontal"></div>
+          <span class="gift-label">For My Harshuu 💖</span>
+        </div>
+      </div>
+
+      <!-- Coupons revealed inside the gift box -->
+      <div class="coupons-vault" id="couponsVault" style="display:none;">
+        <div class="coupons-header">
+          <h3>🎟️ Fiancé's Lifetime Pampering Coupons 🎟️</h3>
+          <p>These coupons are exclusively for HarshuuU and never expire! Tap any coupon to redeem!</p>
+        </div>
+
+        <div class="coupons-grid">
+          <div class="coupon-card" onclick="redeemCoupon(this, 'Unlimited Warm Hugs')">
+            <div class="coupon-tag">COUPON 01</div>
+            <div class="coupon-icon">🫂</div>
+            <h4>Unlimited Warm Hugs</h4>
+            <p>Redeemable anytime you feel tired, cold, or need love.</p>
+            <span class="coupon-status">Tap to Redeem ✨</span>
+          </div>
+
+          <div class="coupon-card" onclick="redeemCoupon(this, 'Late Night Ice Cream & Snack Run')">
+            <div class="coupon-tag">COUPON 02</div>
+            <div class="coupon-icon">🍨</div>
+            <h4>Midnight Ice Cream Run</h4>
+            <p>Fiancé drives to get your favorite treat at any hour.</p>
+            <span class="coupon-status">Tap to Redeem ✨</span>
+          </div>
+
+          <div class="coupon-card" onclick="redeemCoupon(this, 'Win Every Argument (24 Hrs)')">
+            <div class="coupon-tag">COUPON 03</div>
+            <div class="coupon-icon">👑</div>
+            <h4>You Win Every Argument</h4>
+            <p>Valid for 24 hours. Fiancé admits: 'You are right, my Queen.'</p>
+            <span class="coupon-status">Tap to Redeem ✨</span>
+          </div>
+
+          <div class="coupon-card" onclick="redeemCoupon(this, 'Head & Foot Massage')">
+            <div class="coupon-tag">COUPON 04</div>
+            <div class="coupon-icon">💆‍♀️</div>
+            <h4>Relaxing Pamper Massage</h4>
+            <p>Gentle relaxing head or foot massage until you fall asleep peacefully.</p>
+            <span class="coupon-status">Tap to Redeem ✨</span>
+          </div>
+
+          <div class="coupon-card" onclick="redeemCoupon(this, 'Dream Date Night')">
+            <div class="coupon-tag">COUPON 05</div>
+            <div class="coupon-icon">🕯️</div>
+            <h4>Your Choice Date Night</h4>
+            <p>You pick the place, the food, and the movie. Fiancé treats!</p>
+            <span class="coupon-status">Tap to Redeem ✨</span>
+          </div>
+
+          <div class="coupon-card gold-coupon" onclick="redeemCoupon(this, 'One Wish Granted')">
+            <div class="coupon-tag">VIP COUPON</div>
+            <div class="coupon-icon">✨</div>
+            <h4>Any 1 Wish Granted</h4>
+            <p>Ask for anything your heart desires, and your fiancé will fulfill it!</p>
+            <span class="coupon-status">Tap to Redeem 💖</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Romantic Section Divider -->
+    <div class="section-separator">
+      <span>🌸</span><span>💖</span><span>🌸</span>
+    </div>
+
+    <!-- ==========================================
+         NEW: INTERACTIVE SCRATCH-OFF LOVE CARD
+         ========================================== -->
+    <section class="page-section" id="scratchSection">
+      <div class="section-intro">
+        <span class="tagline">✨ Scratch & Reveal &bull; Secret Message ✨</span>
+        <h2 class="section-title">Scratch Off The Card, Harshuu! 🪄</h2>
+        <p class="section-desc">Rub your finger across the rose gold card below to reveal the hidden secret message!</p>
+      </div>
+
+      <div class="scratch-card-wrapper">
+        <div class="scratch-secret-message">
+          <div class="secret-wax">💍</div>
+          <h3>"I Love You In Every Universe"</h3>
+          <p>
+            Harshuu, you are the sweetest blessing of my entire life. Marrying you will be the greatest honor and greatest adventure of my existence. Happy 22nd Birthday, my forever fiancée! 💖
+          </p>
+          <span class="secret-sig">— Your Fiancé Forever</span>
+        </div>
+        <canvas id="scratchCanvas" width="340" height="220"></canvas>
+      </div>
+      <div class="scratch-hint">👆 Use your finger to scratch and reveal the secret note!</div>
     </section>
 
     <!-- Romantic Section Divider -->

@@ -112,7 +112,136 @@ document.addEventListener("DOMContentLoaded", () => {
   loadStoredPhotos();
   initMusicPlayer();
   initTouchSparkleHearts();
+  initScratchCard();
 });
+
+/* ==========================================================================
+   NEW: 3D GIFT BOX UNWRAP & COUPON REDEEM
+   ========================================================================== */
+let giftUnwrapped = false;
+
+function unwrapBirthdayGift() {
+  if (giftUnwrapped) return;
+  giftUnwrapped = true;
+
+  const lid = document.getElementById("giftLid");
+  const vault = document.getElementById("couponsVault");
+
+  if (lid) {
+    lid.classList.add("unwrapped");
+  }
+
+  if (navigator.vibrate) {
+    try { navigator.vibrate([60, 40, 60]); } catch (e) {}
+  }
+
+  triggerGrandConfetti();
+  playCelebrationChime();
+
+  setTimeout(() => {
+    if (vault) {
+      vault.style.display = "block";
+      vault.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, 400);
+}
+
+function redeemCoupon(element, title) {
+  if (element.classList.contains("redeemed")) {
+    alert(`💖 You've already redeemed this coupon, Harshuu! Your fiancé is on it! 🥰`);
+    return;
+  }
+
+  element.classList.add("redeemed");
+  const status = element.querySelector(".coupon-status");
+  if (status) {
+    status.textContent = "✓ REDEEMED 💖";
+  }
+
+  if (navigator.vibrate) {
+    try { navigator.vibrate([40, 40]); } catch (e) {}
+  }
+
+  triggerSingleHeartEffect(element);
+  alert(`🎉 COUPON REDEEMED!\n\nYour fiancé is now officially on duty for: "${title}"! 💍`);
+}
+
+/* ==========================================================================
+   NEW: INTERACTIVE SCRATCH-OFF CARD ENGINE
+   ========================================================================== */
+function initScratchCard() {
+  const canvas = document.getElementById("scratchCanvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+
+  const width = canvas.width;
+  const height = canvas.height;
+
+  // Draw Rose Gold Glitter Surface
+  const gradient = ctx.createLinearGradient(0, 0, width, height);
+  gradient.addColorStop(0, '#f7a8b8');
+  gradient.addColorStop(0.3, '#ffccd9');
+  gradient.addColorStop(0.6, '#ea728c');
+  gradient.addColorStop(1, '#f5d68f');
+
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, width, height);
+
+  // Add decorative foil text
+  ctx.font = 'bold 16px "Playfair Display", Georgia, serif';
+  ctx.fillStyle = '#ffffff';
+  ctx.textAlign = 'center';
+  ctx.shadowColor = 'rgba(0,0,0,0.2)';
+  ctx.shadowBlur = 4;
+  ctx.fillText('✨ SCRATCH WITH FINGER ✨', width / 2, height / 2 - 8);
+  
+  ctx.font = '13px "Plus Jakarta Sans", sans-serif';
+  ctx.fillText('Secret message from your fiancé 💖', width / 2, height / 2 + 16);
+
+  let isDrawing = false;
+  let scratchedPixels = 0;
+  let cardCompleted = false;
+
+  function scratch(x, y) {
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath();
+    ctx.arc(x, y, 22, 0, Math.PI * 2);
+    ctx.fill();
+
+    scratchedPixels++;
+    if (scratchedPixels > 45 && !cardCompleted) {
+      cardCompleted = true;
+      triggerGrandConfetti();
+      playCelebrationChime();
+    }
+  }
+
+  function getPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    return {
+      x: (clientX - rect.left) * (canvas.width / rect.width),
+      y: (clientY - rect.top) * (canvas.height / rect.height)
+    };
+  }
+
+  canvas.addEventListener('pointerdown', (e) => {
+    isDrawing = true;
+    const pos = getPos(e);
+    scratch(pos.x, pos.y);
+  });
+
+  window.addEventListener('pointermove', (e) => {
+    if (!isDrawing) return;
+    const pos = getPos(e);
+    scratch(pos.x, pos.y);
+  });
+
+  window.addEventListener('pointerup', () => {
+    isDrawing = false;
+  });
+}
 
 /* ==========================================================================
    ROMANTIC ENTRANCE UNLOCK (SURPRISE REVEAL)
