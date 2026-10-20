@@ -1,17 +1,11 @@
 /* ==========================================================================
-   HAPPY BIRTHDAY HARSHUUU 🌸 - MAGICAL ROMANTIC SCRIPT (22 OCTOBER)
+   HAPPY BIRTHDAY HARSHUUU 🌸 - MAGICAL 18TH BIRTHDAY CELEBRATION
    ========================================================================== */
 
 // Target Birthday: October 22, 2026 00:00:00 (Local Time)
 const BIRTHDAY_DATE = new Date(2026, 9, 22, 0, 0, 0); // Month is 0-indexed: 9 = October
 
-// YouTube Video ID for "Happy Birthday Instrumental Orchestral" (Edward Benhur)
-const YT_VIDEO_ID = '57jZJ2QpKRg';
-let ytPlayer = null;
-let ytPlayerReady = false;
-let userRequestedPlay = false;
-
-// 22 Sweet & Heart-Melting Reasons Why I Love My Fiancée HarshuuU
+// 18 Sweet & Heart-Melting Reasons Why I Love My Fiancée HarshuuU (18th Milestone!)
 const REASONS_LIST = [
   "Your gentle voice that instantly brings peace to my busiest days.",
   "The adorable way your eyes sparkle whenever you smile.",
@@ -23,18 +17,14 @@ const REASONS_LIST = [
   "Your laugh—the most beautiful melody in this entire world.",
   "The endless kindness and warmth you show to everyone around you.",
   "How you understand me even when I don't say a single word.",
-  "The strength and grace you carry yourself with every day.",
+  "The strength, grace, and maturity you carry yourself with at 18.",
   "That you chose me to be your partner, your best friend, and your fiancé.",
   "How excited you get over little things and sweet surprises.",
   "The comfort of knowing you are my forever home.",
   "Your patience and the way you always listen to my heart.",
-  "The sweet love notes and check-ins that brighten my mornings.",
-  "How your smile can melt away all my stress in a single second.",
-  "The dreams we are building together for our future home and family.",
-  "Your honesty, your loyalty, and your unwavering trust in us.",
   "How proud I feel to tell the entire world: 'She is my fiancée.'",
-  "The beautiful person you are inside and outside.",
-  "Simply because you are HarshuuU—my once-in-a-lifetime love."
+  "The beautiful, radiant person you are inside and outside.",
+  "Simply because you are HarshuuU—my once-in-a-lifetime love, turning 18 today!"
 ];
 
 // Secret Love Letters for Envelopes
@@ -50,57 +40,182 @@ const LOVE_LETTERS = {
     body: `Hey my prettiest girl,\n\nDid you know that your smile is officially my favorite view in the universe? It has this superpower of making everything okay.\n\nIf today was tiring, or you feel a little overwhelmed, take a deep breath. You are doing so wonderfully. You are so capable, so smart, and so deeply loved.\n\nI am always here in your corner—cheering for you, believing in you, and saving all my hugs for you!\n\nNow give me that gorgeous smile, my Queen 😊✨`
   },
   3: {
-    title: "Open On Your Birthday! (22 Oct) 🎂",
-    date: "22nd October &bull; Birthday Day",
-    body: `Dearest HarshuuU,\n\nHappy Birthday to the love of my life, my anchor, and my beautiful future wife!\n\nToday the whole world celebrates the day you were born, but nobody in this universe is more grateful for your existence than me. You brought colors into my world that I never knew existed.\n\nOn this 22nd of October, I wish you endless laughter, glowing health, peace in your mind, and the fulfillment of every single dream you hold close to your heart.\n\nI promise to spend the rest of our lives making you feel loved, appreciated, and cherished.\n\nHappy, Happy Birthday, HarshuuU! 💖💍🎉`
+    title: "Open On Your 18th Birthday! (22 Oct) 🎂",
+    date: "22nd October &bull; 18th Birthday Day",
+    body: `Dearest HarshuuU,\n\nHappy 18th Birthday to the love of my life, my anchor, and my beautiful future wife!\n\nToday the whole world celebrates the day you were born, but nobody in this universe is more grateful for your existence than me. You brought colors into my world that I never knew existed.\n\nOn this 22nd of October, as you step into your golden 18th year, I wish you endless laughter, glowing health, peace in your mind, and the fulfillment of every single dream you hold close to your heart.\n\nI promise to spend the rest of our lives making you feel loved, appreciated, and cherished.\n\nHappy 18th Birthday, HarshuuU! 💖💍🎉`
   }
 };
 
 /* ==========================================================================
-   YOUTUBE IFRAME PLAYER API INTEGRATION (CONTINUOUS SEAMLESS LOOP)
+   GUARANTEED WEB AUDIO SYNTHESIZER: "HAPPY BIRTHDAY TO YOU" MUSIC BOX
    ========================================================================== */
-window.onYouTubeIframeAPIReady = function() {
-  ytPlayer = new YT.Player('youtubePlayer', {
-    height: '100',
-    width: '100',
-    videoId: YT_VIDEO_ID,
-    playerVars: {
-      autoplay: 0,
-      controls: 0,
-      disablekb: 1,
-      fs: 0,
-      loop: 1,
-      playlist: YT_VIDEO_ID, // Essential for native YouTube continuous loop
-      modestbranding: 1,
-      rel: 0,
-      playsinline: 1
-    },
-    events: {
-      onReady: (event) => {
-        ytPlayerReady = true;
-        event.target.setVolume(85);
-        if (userRequestedPlay) {
-          event.target.playVideo();
-        }
-      },
-      onStateChange: (event) => {
-        if (event.data === YT.PlayerState.PLAYING) {
-          updateMusicUI(true, "Happy Birthday Song Playing 💖");
-        } else if (event.data === YT.PlayerState.PAUSED) {
-          updateMusicUI(false, "Music Paused");
-        } else if (event.data === YT.PlayerState.ENDED) {
-          // ENSURE CONTINUOUS INFINITE LOOP: immediately restart and play again!
-          event.target.seekTo(0);
-          event.target.playVideo();
-          updateMusicUI(true, "Playing on Loop 💖");
-        }
-      },
-      onError: () => {
-        console.warn("YouTube player encountered an issue, fallback active.");
+let audioCtx = null;
+let isAudioPlaying = false;
+let melodyTimeoutId = null;
+let customAudioEl = null;
+
+// Authentic Happy Birthday Melody Notes (Frequencies in Hz and Durations in ms)
+const HAPPY_BIRTHDAY_NOTES = [
+  // "Happy Birthday to you"
+  { f: 392.00, d: 340, chord: [130.81, 196.00] }, // G4
+  { f: 392.00, d: 240 },                          // G4
+  { f: 440.00, d: 550, chord: [174.61, 261.63] }, // A4
+  { f: 392.00, d: 550 },                          // G4
+  { f: 523.25, d: 550, chord: [261.63, 329.63] }, // C5
+  { f: 493.88, d: 1100, chord: [196.00, 246.94] },// B4
+  { rest: 220 },
+
+  // "Happy Birthday to you"
+  { f: 392.00, d: 340, chord: [196.00] },         // G4
+  { f: 392.00, d: 240 },                          // G4
+  { f: 440.00, d: 550, chord: [196.00, 293.66] }, // A4
+  { f: 392.00, d: 550 },                          // G4
+  { f: 587.33, d: 550, chord: [146.83, 220.00] }, // D5
+  { f: 523.25, d: 1100, chord: [130.81, 261.63] },// C5
+  { rest: 220 },
+
+  // "Happy Birthday dear Harshuu"
+  { f: 392.00, d: 340, chord: [130.81] },         // G4
+  { f: 392.00, d: 240 },                          // G4
+  { f: 783.99, d: 550, chord: [261.63, 392.00] }, // G5
+  { f: 659.25, d: 550, chord: [164.81, 329.63] }, // E5
+  { f: 523.25, d: 550, chord: [130.81, 261.63] }, // C5
+  { f: 493.88, d: 550 },                          // B4
+  { f: 440.00, d: 900, chord: [174.61, 220.00] }, // A4
+  { rest: 220 },
+
+  // "Happy Birthday to you"
+  { f: 698.46, d: 340, chord: [174.61] },         // F5
+  { f: 698.46, d: 240 },                          // F5
+  { f: 659.25, d: 550, chord: [261.63, 329.63] }, // E5
+  { f: 523.25, d: 550 },                          // C5
+  { f: 587.33, d: 550, chord: [196.00, 293.66] }, // D5
+  { f: 523.25, d: 1400, chord: [130.81, 196.00, 261.63, 329.63] }, // C5 final resolution
+  { rest: 1200 } // Pause before loop repeats
+];
+
+function initAudioContext() {
+  if (!audioCtx) {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    audioCtx = new AudioContextClass();
+  }
+  if (audioCtx.state === "suspended") {
+    audioCtx.resume();
+  }
+}
+
+// Plays a gentle, acoustic celesta/music-box chime tone
+function playChimeNote(freq, durationSec, isChord = false) {
+  if (!audioCtx) return;
+
+  const now = audioCtx.currentTime;
+  const osc = audioCtx.createOscillator();
+  const oscHarmonic = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+
+  // Bell/Music-box blend: sine + triangle harmonic
+  osc.type = "sine";
+  osc.frequency.setValueAtTime(freq, now);
+
+  oscHarmonic.type = "triangle";
+  oscHarmonic.frequency.setValueAtTime(freq * 2, now);
+
+  const maxGain = isChord ? 0.03 : 0.08;
+  gain.gain.setValueAtTime(0.001, now);
+  gain.gain.exponentialRampToValueAtTime(maxGain, now + 0.04);
+  gain.gain.exponentialRampToValueAtTime(0.0001, now + durationSec);
+
+  osc.connect(gain);
+  oscHarmonic.connect(gain);
+  gain.connect(audioCtx.destination);
+
+  osc.start(now);
+  oscHarmonic.start(now);
+  osc.stop(now + durationSec + 0.05);
+  oscHarmonic.stop(now + durationSec + 0.05);
+}
+
+// Infinite Seamless Music Box Loop
+function startHappyBirthdayLoop() {
+  initAudioContext();
+  isAudioPlaying = true;
+  updateMusicUI(true, "Happy Birthday Song Playing 💖");
+
+  let noteIndex = 0;
+
+  function playStep() {
+    if (!isAudioPlaying) return;
+
+    const item = HAPPY_BIRTHDAY_NOTES[noteIndex];
+
+    if (item.rest) {
+      melodyTimeoutId = setTimeout(playStep, item.rest);
+    } else {
+      const durSec = item.d / 1000;
+      playChimeNote(item.f, durSec * 1.6, false);
+
+      // Play backing chord if defined
+      if (item.chord && item.chord.length) {
+        item.chord.forEach(chordFreq => {
+          playChimeNote(chordFreq, durSec * 1.8, true);
+        });
       }
+
+      melodyTimeoutId = setTimeout(playStep, item.d);
     }
-  });
-};
+
+    noteIndex++;
+    if (noteIndex >= HAPPY_BIRTHDAY_NOTES.length) {
+      noteIndex = 0; // Seamless loop!
+    }
+  }
+
+  playStep();
+}
+
+function stopHappyBirthdayLoop() {
+  isAudioPlaying = false;
+  if (melodyTimeoutId) {
+    clearTimeout(melodyTimeoutId);
+    melodyTimeoutId = null;
+  }
+  updateMusicUI(false, "Tap to Play Music");
+}
+
+function toggleMusic() {
+  if (customAudioEl) {
+    if (customAudioEl.paused) {
+      customAudioEl.play();
+      updateMusicUI(true, "Custom Song Playing 💖");
+    } else {
+      customAudioEl.pause();
+      updateMusicUI(false, "Music Paused");
+    }
+    return;
+  }
+
+  if (isAudioPlaying) {
+    stopHappyBirthdayLoop();
+  } else {
+    startHappyBirthdayLoop();
+  }
+}
+
+function updateMusicUI(playing, statusText) {
+  const bars = document.getElementById("musicBars");
+  const btn = document.getElementById("musicToggleBtn");
+  const status = document.getElementById("musicStatusText");
+
+  if (playing) {
+    if (bars) bars.classList.add("playing");
+    if (btn) btn.classList.add("playing");
+    if (status) status.textContent = statusText;
+  } else {
+    if (bars) bars.classList.remove("playing");
+    if (btn) btn.classList.remove("playing");
+    if (status) status.textContent = statusText;
+  }
+}
 
 /* ==========================================================================
    INITIALIZATION
@@ -108,140 +223,12 @@ window.onYouTubeIframeAPIReady = function() {
 document.addEventListener("DOMContentLoaded", () => {
   initCountdown();
   initSakuraCanvas();
-  render22Reasons();
+  render18Reasons();
   loadStoredPhotos();
   initMusicPlayer();
   initTouchSparkleHearts();
   initScratchCard();
 });
-
-/* ==========================================================================
-   NEW: 3D GIFT BOX UNWRAP & COUPON REDEEM
-   ========================================================================== */
-let giftUnwrapped = false;
-
-function unwrapBirthdayGift() {
-  if (giftUnwrapped) return;
-  giftUnwrapped = true;
-
-  const lid = document.getElementById("giftLid");
-  const vault = document.getElementById("couponsVault");
-
-  if (lid) {
-    lid.classList.add("unwrapped");
-  }
-
-  if (navigator.vibrate) {
-    try { navigator.vibrate([60, 40, 60]); } catch (e) {}
-  }
-
-  triggerGrandConfetti();
-  playCelebrationChime();
-
-  setTimeout(() => {
-    if (vault) {
-      vault.style.display = "block";
-      vault.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }, 400);
-}
-
-function redeemCoupon(element, title) {
-  if (element.classList.contains("redeemed")) {
-    alert(`💖 You've already redeemed this coupon, Harshuu! Your fiancé is on it! 🥰`);
-    return;
-  }
-
-  element.classList.add("redeemed");
-  const status = element.querySelector(".coupon-status");
-  if (status) {
-    status.textContent = "✓ REDEEMED 💖";
-  }
-
-  if (navigator.vibrate) {
-    try { navigator.vibrate([40, 40]); } catch (e) {}
-  }
-
-  triggerSingleHeartEffect(element);
-  alert(`🎉 COUPON REDEEMED!\n\nYour fiancé is now officially on duty for: "${title}"! 💍`);
-}
-
-/* ==========================================================================
-   NEW: INTERACTIVE SCRATCH-OFF CARD ENGINE
-   ========================================================================== */
-function initScratchCard() {
-  const canvas = document.getElementById("scratchCanvas");
-  if (!canvas) return;
-  const ctx = canvas.getContext("2d");
-
-  const width = canvas.width;
-  const height = canvas.height;
-
-  // Draw Rose Gold Glitter Surface
-  const gradient = ctx.createLinearGradient(0, 0, width, height);
-  gradient.addColorStop(0, '#f7a8b8');
-  gradient.addColorStop(0.3, '#ffccd9');
-  gradient.addColorStop(0.6, '#ea728c');
-  gradient.addColorStop(1, '#f5d68f');
-
-  ctx.fillStyle = gradient;
-  ctx.fillRect(0, 0, width, height);
-
-  // Add decorative foil text
-  ctx.font = 'bold 16px "Playfair Display", Georgia, serif';
-  ctx.fillStyle = '#ffffff';
-  ctx.textAlign = 'center';
-  ctx.shadowColor = 'rgba(0,0,0,0.2)';
-  ctx.shadowBlur = 4;
-  ctx.fillText('✨ SCRATCH WITH FINGER ✨', width / 2, height / 2 - 8);
-  
-  ctx.font = '13px "Plus Jakarta Sans", sans-serif';
-  ctx.fillText('Secret message from your fiancé 💖', width / 2, height / 2 + 16);
-
-  let isDrawing = false;
-  let scratchedPixels = 0;
-  let cardCompleted = false;
-
-  function scratch(x, y) {
-    ctx.globalCompositeOperation = 'destination-out';
-    ctx.beginPath();
-    ctx.arc(x, y, 22, 0, Math.PI * 2);
-    ctx.fill();
-
-    scratchedPixels++;
-    if (scratchedPixels > 45 && !cardCompleted) {
-      cardCompleted = true;
-      triggerGrandConfetti();
-      playCelebrationChime();
-    }
-  }
-
-  function getPos(e) {
-    const rect = canvas.getBoundingClientRect();
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    return {
-      x: (clientX - rect.left) * (canvas.width / rect.width),
-      y: (clientY - rect.top) * (canvas.height / rect.height)
-    };
-  }
-
-  canvas.addEventListener('pointerdown', (e) => {
-    isDrawing = true;
-    const pos = getPos(e);
-    scratch(pos.x, pos.y);
-  });
-
-  window.addEventListener('pointermove', (e) => {
-    if (!isDrawing) return;
-    const pos = getPos(e);
-    scratch(pos.x, pos.y);
-  });
-
-  window.addEventListener('pointerup', () => {
-    isDrawing = false;
-  });
-}
 
 /* ==========================================================================
    ROMANTIC ENTRANCE UNLOCK (SURPRISE REVEAL)
@@ -252,29 +239,15 @@ function unlockSurpriseExperience() {
     curtain.classList.add("opened");
   }
 
-  // Mobile subtle romantic haptic feedback
   if (navigator.vibrate) {
     try { navigator.vibrate([40, 60, 40]); } catch (e) {}
   }
 
-  // Play YouTube Happy Birthday Orchestral song on loop
-  userRequestedPlay = true;
-  if (ytPlayer && ytPlayerReady) {
-    try {
-      ytPlayer.unMute();
-      ytPlayer.playVideo();
-      updateMusicUI(true, "Happy Birthday Song Playing 💖");
-    } catch (e) {
-      startRomanticSynthMelody();
-    }
-  } else {
-    // If YouTube player is still initializing, start audio synth fallback immediately
-    startRomanticSynthMelody();
-  }
+  // 100% Guaranteed Native Audio Playback triggered by user tap!
+  startHappyBirthdayLoop();
 
-  // Grand celebration welcome confetti
+  // Grand celebration welcome confetti & chime
   triggerGrandConfetti();
-  playCelebrationChime();
 }
 
 /* ==========================================================================
@@ -288,86 +261,9 @@ function scrollToSection(sectionId) {
 }
 
 /* ==========================================================================
-   INTERACTIVE LOVE METER
+   18 REASONS POPULATOR (SWEET 18 MILESTONE)
    ========================================================================== */
-let meterCalculated = false;
-
-function calculateLoveMeter() {
-  if (meterCalculated) return;
-  meterCalculated = true;
-
-  const fill = document.getElementById("meterFill");
-  const percentText = document.getElementById("meterPercent");
-  const resultBox = document.getElementById("meterResultBox");
-  const btn = document.getElementById("calculateLoveBtn");
-
-  btn.disabled = true;
-  btn.style.opacity = "0.7";
-  btn.textContent = "Calculating Love Frequency... 💖";
-
-  let current = 0;
-  const interval = setInterval(() => {
-    current += 4;
-    if (current <= 100) {
-      fill.style.width = current + "%";
-      percentText.textContent = current + "%";
-    } else {
-      clearInterval(interval);
-      fill.style.width = "100%";
-      percentText.textContent = "∞ INFINITE %";
-      btn.textContent = "✨ Calculated: Infinite Love ✨";
-      resultBox.style.display = "block";
-      triggerGrandConfetti();
-      playCelebrationChime();
-    }
-  }, 35);
-}
-
-/* ==========================================================================
-   DIGITAL COUNTDOWN TIMER (TO 22 OCTOBER)
-   ========================================================================== */
-function initCountdown() {
-  const daysEl = document.getElementById("daysNum");
-  const hoursEl = document.getElementById("hoursNum");
-  const minsEl = document.getElementById("minutesNum");
-  const secsEl = document.getElementById("secondsNum");
-  const statusMsg = document.getElementById("countdownMessage");
-  const titleEl = document.getElementById("countdownTitle");
-
-  function updateTimer() {
-    const now = new Date().getTime();
-    const target = BIRTHDAY_DATE.getTime();
-    const diff = target - now;
-
-    if (diff <= 0) {
-      daysEl.textContent = "00";
-      hoursEl.textContent = "00";
-      minsEl.textContent = "00";
-      secsEl.textContent = "00";
-      titleEl.innerHTML = "🎉 IT'S HARSHUU'S BIRTHDAY TODAY! (22 OCT) 🎉";
-      statusMsg.innerHTML = "💖 Happy Birthday to my wonderful fiancée HarshuuU! Today is all about you! 🎂✨";
-      return;
-    }
-
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-    daysEl.textContent = String(days).padStart(2, "0");
-    hoursEl.textContent = String(hours).padStart(2, "0");
-    minsEl.textContent = String(minutes).padStart(2, "0");
-    secsEl.textContent = String(seconds).padStart(2, "0");
-  }
-
-  updateTimer();
-  setInterval(updateTimer, 1000);
-}
-
-/* ==========================================================================
-   22 REASONS POPULATOR
-   ========================================================================== */
-function render22Reasons() {
+function render18Reasons() {
   const container = document.getElementById("reasonsGrid");
   if (!container) return;
 
@@ -406,6 +302,206 @@ function triggerSingleHeartEffect(element) {
       colors: ['#ff758c', '#ff7eb3', '#f7a8b8', '#ffccd9']
     });
   }
+}
+
+/* ==========================================================================
+   INTERACTIVE LOVE METER
+   ========================================================================== */
+let meterCalculated = false;
+
+function calculateLoveMeter() {
+  if (meterCalculated) return;
+  meterCalculated = true;
+
+  const fill = document.getElementById("meterFill");
+  const percentText = document.getElementById("meterPercent");
+  const resultBox = document.getElementById("meterResultBox");
+  const btn = document.getElementById("calculateLoveBtn");
+
+  btn.disabled = true;
+  btn.style.opacity = "0.7";
+  btn.textContent = "Calculating Love Frequency... 💖";
+
+  let current = 0;
+  const interval = setInterval(() => {
+    current += 4;
+    if (current <= 100) {
+      fill.style.width = current + "%";
+      percentText.textContent = current + "%";
+    } else {
+      clearInterval(interval);
+      fill.style.width = "100%";
+      percentText.textContent = "∞ INFINITE %";
+      btn.textContent = "✨ Calculated: Infinite Love ✨";
+      resultBox.style.display = "block";
+      triggerGrandConfetti();
+    }
+  }, 35);
+}
+
+/* ==========================================================================
+   DIGITAL COUNTDOWN TIMER (TO 22 OCTOBER)
+   ========================================================================== */
+function initCountdown() {
+  const daysEl = document.getElementById("daysNum");
+  const hoursEl = document.getElementById("hoursNum");
+  const minsEl = document.getElementById("minutesNum");
+  const secsEl = document.getElementById("secondsNum");
+  const statusMsg = document.getElementById("countdownMessage");
+  const titleEl = document.getElementById("countdownTitle");
+
+  function updateTimer() {
+    const now = new Date().getTime();
+    const target = BIRTHDAY_DATE.getTime();
+    const diff = target - now;
+
+    if (diff <= 0) {
+      daysEl.textContent = "00";
+      hoursEl.textContent = "00";
+      minsEl.textContent = "00";
+      secsEl.textContent = "00";
+      titleEl.innerHTML = "🎉 IT'S HARSHUU'S 18th BIRTHDAY TODAY! (22 OCT) 🎉";
+      statusMsg.innerHTML = "💖 Happy 18th Birthday to my wonderful fiancée HarshuuU! Welcome to 18, my Queen! 🎂✨";
+      return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    daysEl.textContent = String(days).padStart(2, "0");
+    hoursEl.textContent = String(hours).padStart(2, "0");
+    minsEl.textContent = String(minutes).padStart(2, "0");
+    secsEl.textContent = String(seconds).padStart(2, "0");
+  }
+
+  updateTimer();
+  setInterval(updateTimer, 1000);
+}
+
+/* ==========================================================================
+   3D GIFT BOX UNWRAP & COUPON REDEEM
+   ========================================================================== */
+let giftUnwrapped = false;
+
+function unwrapBirthdayGift() {
+  if (giftUnwrapped) return;
+  giftUnwrapped = true;
+
+  const lid = document.getElementById("giftLid");
+  const vault = document.getElementById("couponsVault");
+
+  if (lid) {
+    lid.classList.add("unwrapped");
+  }
+
+  if (navigator.vibrate) {
+    try { navigator.vibrate([60, 40, 60]); } catch (e) {}
+  }
+
+  triggerGrandConfetti();
+
+  setTimeout(() => {
+    if (vault) {
+      vault.style.display = "block";
+      vault.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, 400);
+}
+
+function redeemCoupon(element, title) {
+  if (element.classList.contains("redeemed")) {
+    alert(`💖 You've already redeemed this coupon, Harshuu! Your fiancé is on it! 🥰`);
+    return;
+  }
+
+  element.classList.add("redeemed");
+  const status = element.querySelector(".coupon-status");
+  if (status) {
+    status.textContent = "✓ REDEEMED 💖";
+  }
+
+  if (navigator.vibrate) {
+    try { navigator.vibrate([40, 40]); } catch (e) {}
+  }
+
+  triggerSingleHeartEffect(element);
+  alert(`🎉 COUPON REDEEMED!\n\nYour fiancé is now officially on duty for: "${title}"! 💍`);
+}
+
+/* ==========================================================================
+   INTERACTIVE SCRATCH-OFF CARD ENGINE
+   ========================================================================== */
+function initScratchCard() {
+  const canvas = document.getElementById("scratchCanvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+
+  const width = canvas.width;
+  const height = canvas.height;
+
+  const gradient = ctx.createLinearGradient(0, 0, width, height);
+  gradient.addColorStop(0, '#f7a8b8');
+  gradient.addColorStop(0.3, '#ffccd9');
+  gradient.addColorStop(0.6, '#ea728c');
+  gradient.addColorStop(1, '#f5d68f');
+
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, width, height);
+
+  ctx.font = 'bold 16px "Playfair Display", Georgia, serif';
+  ctx.fillStyle = '#ffffff';
+  ctx.textAlign = 'center';
+  ctx.shadowColor = 'rgba(0,0,0,0.2)';
+  ctx.shadowBlur = 4;
+  ctx.fillText('✨ SCRATCH WITH FINGER ✨', width / 2, height / 2 - 8);
+  
+  ctx.font = '13px "Plus Jakarta Sans", sans-serif';
+  ctx.fillText('Secret message from your fiancé 💖', width / 2, height / 2 + 16);
+
+  let isDrawing = false;
+  let scratchedPixels = 0;
+  let cardCompleted = false;
+
+  function scratch(x, y) {
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath();
+    ctx.arc(x, y, 22, 0, Math.PI * 2);
+    ctx.fill();
+
+    scratchedPixels++;
+    if (scratchedPixels > 45 && !cardCompleted) {
+      cardCompleted = true;
+      triggerGrandConfetti();
+    }
+  }
+
+  function getPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    return {
+      x: (clientX - rect.left) * (canvas.width / rect.width),
+      y: (clientY - rect.top) * (canvas.height / rect.height)
+    };
+  }
+
+  canvas.addEventListener('pointerdown', (e) => {
+    isDrawing = true;
+    const pos = getPos(e);
+    scratch(pos.x, pos.y);
+  });
+
+  window.addEventListener('pointermove', (e) => {
+    if (!isDrawing) return;
+    const pos = getPos(e);
+    scratch(pos.x, pos.y);
+  });
+
+  window.addEventListener('pointerup', () => {
+    isDrawing = false;
+  });
 }
 
 /* ==========================================================================
@@ -452,7 +548,6 @@ function blowOutCandles() {
     }
   }
 
-  playCelebrationChime();
   triggerGrandConfetti();
 
   document.getElementById("wishMessageBox").style.display = "block";
@@ -528,169 +623,22 @@ function triggerGentleConfetti() {
 }
 
 /* ==========================================================================
-   ROMANTIC MUSIC PLAYER (YOUTUBE LOOP + WEB AUDIO SYNTH + CUSTOM FILE)
+   MUSIC PLAYER CONTROLS & CUSTOM FILE UPLOAD
    ========================================================================== */
-let audioCtx = null;
-let isPlaying = false;
-let synthInterval = null;
-let customAudioEl = null;
-
 function initMusicPlayer() {
   const toggleBtn = document.getElementById("musicToggleBtn");
   const uploadBtn = document.getElementById("musicUploadTrigger");
   const fileInput = document.getElementById("customAudioInput");
 
-  toggleBtn.addEventListener("click", toggleMusic);
-
-  uploadBtn.addEventListener("click", () => {
-    fileInput.click();
-  });
-
-  fileInput.addEventListener("change", handleCustomAudioUpload);
-}
-
-function toggleMusic() {
-  // If custom uploaded audio
-  if (customAudioEl) {
-    if (customAudioEl.paused) {
-      customAudioEl.play();
-      updateMusicUI(true, "Custom Song Playing 💖");
-    } else {
-      customAudioEl.pause();
-      updateMusicUI(false, "Music Paused");
-    }
-    return;
+  if (toggleBtn) {
+    toggleBtn.addEventListener("click", toggleMusic);
   }
 
-  // If YouTube player is ready
-  if (ytPlayer && ytPlayerReady) {
-    try {
-      const state = ytPlayer.getPlayerState();
-      if (state === YT.PlayerState.PLAYING) {
-        ytPlayer.pauseVideo();
-        updateMusicUI(false, "Music Paused");
-      } else {
-        stopRomanticSynthMelody();
-        ytPlayer.playVideo();
-        updateMusicUI(true, "Happy Birthday Song Playing 💖");
-      }
-      return;
-    } catch (e) {
-      console.warn("YouTube toggle exception", e);
-    }
-  }
-
-  // Fallback to built-in Romantic Melody Synthesizer
-  if (!isPlaying) {
-    startRomanticSynthMelody();
-    updateMusicUI(true, "Romantic Melody Playing 🌸");
-  } else {
-    stopRomanticSynthMelody();
-    updateMusicUI(false, "Tap to Play Music");
-  }
-}
-
-function updateMusicUI(playing, statusText) {
-  isPlaying = playing;
-  const bars = document.getElementById("musicBars");
-  const btn = document.getElementById("musicToggleBtn");
-  const status = document.getElementById("musicStatusText");
-
-  if (playing) {
-    bars.classList.add("playing");
-    btn.classList.add("playing");
-    status.textContent = statusText;
-  } else {
-    bars.classList.remove("playing");
-    btn.classList.remove("playing");
-    status.textContent = statusText;
-  }
-}
-
-function startRomanticSynthMelody() {
-  if (!audioCtx) {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    audioCtx = new AudioContext();
-  }
-
-  if (audioCtx.state === "suspended") {
-    audioCtx.resume();
-  }
-
-  isPlaying = true;
-
-  const chords = [
-    [261.63, 329.63, 392.00, 523.25], // C4, E4, G4, C5
-    [196.00, 246.94, 293.66, 392.00], // G3, B3, D4, G4
-    [220.00, 261.63, 329.63, 440.00], // A3, C4, E4, A4
-    [174.61, 220.00, 261.63, 349.23]  // F3, A3, C4, F4
-  ];
-
-  let chordIndex = 0;
-  let noteIndex = 0;
-
-  function playNextNote() {
-    if (!isPlaying || !audioCtx) return;
-
-    const currentChord = chords[chordIndex];
-    const freq = currentChord[noteIndex];
-
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-
-    osc.type = "sine";
-    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-
-    gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.08, audioCtx.currentTime + 0.1);
-    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.9);
-
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-
-    osc.start();
-    osc.stop(audioCtx.currentTime + 0.95);
-
-    noteIndex++;
-    if (noteIndex >= currentChord.length) {
-      noteIndex = 0;
-      chordIndex = (chordIndex + 1) % chords.length;
-    }
-  }
-
-  playNextNote();
-  synthInterval = setInterval(playNextNote, 420);
-}
-
-function stopRomanticSynthMelody() {
-  isPlaying = false;
-  if (synthInterval) {
-    clearInterval(synthInterval);
-    synthInterval = null;
-  }
-}
-
-function playCelebrationChime() {
-  try {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    const ctx = audioCtx || new AudioContext();
-    const notes = [523.25, 659.25, 783.99, 1046.50];
-
-    notes.forEach((freq, idx) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = "triangle";
-      osc.frequency.setValueAtTime(freq, ctx.currentTime + idx * 0.12);
-      gain.gain.setValueAtTime(0.001, ctx.currentTime + idx * 0.12);
-      gain.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + idx * 0.12 + 0.05);
-      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + idx * 0.12 + 0.7);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start(ctx.currentTime + idx * 0.12);
-      osc.stop(ctx.currentTime + idx * 0.12 + 0.75);
+  if (uploadBtn && fileInput) {
+    uploadBtn.addEventListener("click", () => {
+      fileInput.click();
     });
-  } catch (e) {
-    // Audio permission fallback
+    fileInput.addEventListener("change", handleCustomAudioUpload);
   }
 }
 
@@ -698,10 +646,7 @@ function handleCustomAudioUpload(event) {
   const file = event.target.files[0];
   if (!file) return;
 
-  stopRomanticSynthMelody();
-  if (ytPlayer && ytPlayerReady) {
-    try { ytPlayer.pauseVideo(); } catch (e) {}
-  }
+  stopHappyBirthdayLoop();
 
   if (customAudioEl) {
     customAudioEl.pause();
@@ -709,11 +654,11 @@ function handleCustomAudioUpload(event) {
 
   const fileUrl = URL.createObjectURL(file);
   customAudioEl = new Audio(fileUrl);
-  customAudioEl.loop = true; // Loop custom song forever
+  customAudioEl.loop = true;
   customAudioEl.play();
 
   document.getElementById("musicTrackName").textContent = file.name.replace(/\.[^/.]+$/, "");
-  updateMusicUI(true, "Playing Your Couple Song 💕");
+  updateMusicUI(true, "Playing Your Song 💕");
 }
 
 /* ==========================================================================

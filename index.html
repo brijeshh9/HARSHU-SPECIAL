@@ -14,9 +14,6 @@
   <!-- Canvas Confetti CDN -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-  <!-- YouTube IFrame Player API for Infinite Looping Song -->
-  <script src="https://www.youtube.com/iframe_api"></script>
-
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -58,16 +55,12 @@
       </div>
     </button>
     <div class="music-info">
-      <span class="music-title" id="musicTrackName">Happy Birthday (Orchestral Melody)</span>
-      <span class="music-status" id="musicStatusText">Playing for Harshuu 🌸</span>
+      <span class="music-title" id="musicTrackName">Happy Birthday Melody 🌸</span>
+      <span class="music-status" id="musicStatusText">Playing on Loop 💖</span>
     </div>
+    <a href="https://youtu.be/57jZJ2QpKRg" target="_blank" rel="noopener noreferrer" class="music-upload-btn" title="Open YouTube Song" style="text-decoration:none;">🎥</a>
     <input type="file" id="customAudioInput" accept="audio/*" style="display:none">
     <button class="music-upload-btn" id="musicUploadTrigger" title="Upload Your Special Couple Song">📂</button>
-  </div>
-
-  <!-- Mobile-Compliant YouTube Audio Stream Container (Continuous Infinite Loop) -->
-  <div id="ytPlayerContainer" style="position:fixed; top:0; left:0; width:180px; height:120px; opacity:0.001; pointer-events:none; z-index:-10;">
-    <div id="youtubePlayer"></div>
   </div>
 
   <!-- Main Single Page Container -->
@@ -78,18 +71,18 @@
          ========================================== -->
     <header class="hero-header">
       <div class="badge-fiancee">
-        <span class="sparkle">✨</span> To My Future Wife & Queen <span class="sparkle">✨</span>
+        <span class="sparkle">✨</span> Celebrating Harshuu's 18th Birthday Milestone <span class="sparkle">✨</span>
       </div>
-      <h1 class="main-title">Happy Birthday, My <span class="highlight-name">HarshuuU</span> 🌸</h1>
+      <h1 class="main-title">Happy 18th Birthday, My <span class="highlight-name">HarshuuU</span> 🌸</h1>
       <p class="love-subtitle">
-        "You didn't just walk into my life; you bloomed in it like the sweetest spring morning. Happy 22nd of October, my forever love."
+        "Welcome to 18, my Queen! You didn't just walk into my life; you bloomed in it like the sweetest spring morning. Celebrating your 18th milestone on 22 October."
       </p>
 
       <!-- Digital Countdown Card to 22 October -->
       <div class="countdown-card" id="countdownCard">
         <div class="countdown-label">
           <span class="timer-heart">💖</span>
-          <span id="countdownTitle">Countdown To Harshuu's Big Day &bull; 22 October</span>
+          <span id="countdownTitle">Countdown To Harshuu's 18th Birthday &bull; 22 October</span>
           <span class="timer-heart">💖</span>
         </div>
         
@@ -124,7 +117,7 @@
         </div>
         
         <div class="countdown-status" id="countdownMessage">
-          🌸 Counting down every single second until we celebrate you, my Queen!
+          🌸 Counting down every second until we celebrate your 18th birthday, my Queen!
         </div>
       </div>
 
@@ -143,7 +136,7 @@
           💍 7 Vows To My Wife
         </button>
         <button class="pill-action-btn" onclick="scrollToSection('reasonsSection')">
-          💖 22 Reasons I Love You
+          💖 18 Reasons I Love You
         </button>
         <button class="pill-action-btn" onclick="openCustomizeModal()">
           📷 Add Our Real Photos
@@ -154,18 +147,18 @@
     <!-- Couple Love Stats Ribbon -->
     <div class="stats-ribbon">
       <div class="stat-item">
+        <span class="stat-number">18 Years</span>
+        <span class="stat-label">Her Golden Milestone 👑</span>
+      </div>
+      <div class="stat-divider">🌸</div>
+      <div class="stat-item">
         <span class="stat-number">22 Oct</span>
-        <span class="stat-label">Her Birthday &bull; Queen's Day</span>
+        <span class="stat-label">Her Special Birthday</span>
       </div>
       <div class="stat-divider">🌸</div>
       <div class="stat-item">
-        <span class="stat-number">Infinite</span>
-        <span class="stat-label">Love In My Heart For You</span>
-      </div>
-      <div class="stat-divider">🌸</div>
-      <div class="stat-item">
-        <span class="stat-number">1 & Only</span>
-        <span class="stat-label">Fiancée & Future Wife</span>
+        <span class="stat-number">Forever</span>
+        <span class="stat-label">My Fiancée & Future Wife</span>
       </div>
     </div>
 
@@ -388,7 +381,7 @@
           <div class="secret-wax">💍</div>
           <h3>"I Love You In Every Universe"</h3>
           <p>
-            Harshuu, you are the sweetest blessing of my entire life. Marrying you will be the greatest honor and greatest adventure of my existence. Happy 22nd Birthday, my forever fiancée! 💖
+            Harshuu, you are the sweetest blessing of my entire life. Marrying you will be the greatest honor and greatest adventure of my existence. Happy 18th Birthday, my forever fiancée! 💖
           </p>
           <span class="secret-sig">— Your Fiancé Forever</span>
         </div>
@@ -674,17 +667,17 @@
     </div>
 
     <!-- ==========================================
-         22 REASONS WHY I LOVE YOU
+         18 REASONS WHY I LOVE YOU (SWEET 18 MILESTONE)
          ========================================== -->
     <section class="page-section" id="reasonsSection">
       <div class="section-intro">
-        <span class="tagline">💖 Celebrating 22 With 22 Reasons 💖</span>
-        <h2 class="section-title">22 Reasons Why I Love HarshuuU</h2>
+        <span class="tagline">💖 Celebrating Sweet 18 With 18 Love Reasons 💖</span>
+        <h2 class="section-title">18 Reasons Why I Love HarshuuU</h2>
         <p class="section-desc">Tap on any heart card to pop it open and discover why you own every beat of my heart!</p>
       </div>
 
       <div class="reasons-grid" id="reasonsGrid">
-        <!-- Populated dynamically via JS with 22 romantic reasons -->
+        <!-- Populated dynamically via JS with 18 romantic reasons -->
       </div>
     </section>
 
@@ -707,16 +700,16 @@
         
         <div class="letter-body">
           <p>
-            Happy, happy Birthday to the girl who stole my heart, turned my ordinary world into pure poetry, and made me the luckiest fiancé alive.
+            Happy 18th Birthday to the girl who stole my heart, turned my ordinary world into pure poetry, and made me the luckiest fiancé alive.
           </p>
           <p>
-            When I look at you, I don't just see the prettiest face or the cutest laughter—I see my partner, my peace, my confidante, and the person I want to build every single tomorrow with. You have a heart of pure gold, and your kindness inspires me every single day.
+            When I look at you, I don't just see the prettiest face or the cutest laughter—I see my partner, my peace, my confidante, and the person I want to build every single tomorrow with. Seeing you step into your 18th year with so much grace, kindness, and beauty fills my heart with endless pride.
           </p>
           <p>
             Through every joy, every test, every long conversation, and every little dream we share, I promise to stand by you, make you laugh when you're tired, cheer the loudest for all your victories, and love you deeper with each passing year.
           </p>
           <p>
-            This website is just a small digital token of my infinite love for you on your special 22nd of October. May your birthday and all our tomorrows be filled with soft smiles, peaceful sleep, huge milestones, and endless warm hugs.
+            This website is just a small digital token of my infinite love for you on your milestone 18th birthday on 22 October. May all our tomorrows be filled with soft smiles, peaceful sleep, huge milestones, and endless warm hugs.
           </p>
           <p class="letter-closing">
             Forever yours, always and only,<br>
